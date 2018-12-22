@@ -1,0 +1,39 @@
+const { MongoClient, ObjectID } = require('mongodb');
+
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url, { useNewUrlParser: true });
+
+client.connect(err => {
+  if (err) {
+    return console.log('Unable to connect to MongoDB server', err);
+  }
+
+  const db = client.db('TodoApp');
+  console.log('Connected to MongoDB server');
+
+  //   db.collection('Todos')
+  //     .find({ _id: new ObjectID('5c1d6bd3233e761c1c1022ad') })
+  //     .toArray()
+  //     .then(
+  //       docs => {
+  //         console.log('Todos');
+  //         console.log(JSON.stringify(docs, undefined, 2));
+  //       },
+  //       err => {
+  //         console.log('Unable to fetch todos', err);
+  //       }
+  //     );
+
+  db.collection('Todos')
+    .find()
+    .count()
+    .then(
+      count => {
+        console.log(`Todos count: ${count}`);
+      },
+      err => {
+        console.log('Unable to fetch todos', err);
+      }
+    );
+  // client.close();
+});
